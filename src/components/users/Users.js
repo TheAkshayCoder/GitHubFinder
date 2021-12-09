@@ -1,30 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import UserItems from './UserItems'
-import axios from 'axios'
-// import { Spinner } from '../layout/Spinner.js'
-
-export default class Users extends Component {
-    state = {
-        users:[],
-        loding:false
-    }
-    
-    
-   componentDidMount(){
-       this.setState({loading:true})
-        axios.get('https://api.github.com/users').then(res => this.setState({users:res.data})).then(()=>this.setState({loading:false}))
-    }
-    
-    
+// import axios from 'axios'
+import { Spinner } from '../layout/Spinner.js'
+import PropTypes from 'prop-types'
 
 
-    render() {
+ const Users = (props) => {
+    if (props.loading){
+        return <Spinner/>
+    }else{
         return (
             <div style={userStyle}>
-                {this.state.loding?'loading...':this.state.users.map((user,i)=><UserItems key={i} user={user}/>)}
+                {props.users.map((user,i)=><UserItems key={i} user={user}/>)}
             </div>
         )
     }
+    
+}
+
+Users.prototype = {
+    users:PropTypes.array.isRequired,
+    loading:PropTypes.bool.isRequired,
 }
 
 const userStyle = {
@@ -32,3 +28,5 @@ const userStyle = {
     gridTemplateColumns:'repeat(3,1fr)',
     gridGap:'1rem'
 }
+
+export default Users

@@ -1,0 +1,7 @@
+Wrong - class App extends Component(){
+
+}
+
+Correct - class App extends Component{
+
+}
