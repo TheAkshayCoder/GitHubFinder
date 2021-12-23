@@ -5,6 +5,7 @@ import Users from './components/users/Users';
 import { Spinner } from './components/layout/Spinner';
 import axios from 'axios';
 import Search from './components/users/Search';
+import Alert from './components/layout/Alert';
 
 import './App.css';
 
@@ -12,7 +13,8 @@ class App extends Component {
 
   state = {
     users:[],
-    loding:false
+    loding:false,
+    alert:null
 }
 
 
@@ -30,12 +32,21 @@ clearUsers=()=>{
   this.setState({users:[]})
 }
 
+setAlert=(msg,type)=>{
+  this.setState({alert:{
+    msg:msg,
+    type:type
+  }})
+  setTimeout(()=>this.setState({alert:null}),3000)
+}
+
   render(){
     return (
       <div className="App">
         <Navbar/>
         <div className="container">
-        <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length>0?true:false}/>
+          <Alert alert={this.state.alert}/>
+        <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length>0?true:false} setAlert={this.setAlert}/>
         {this.state.loding?<Spinner/>:this.state.users.map((user,i)=><Users loading={this.state.loading} key={i} users={this.state.users}/>)}
         </div>
       </div>
