@@ -1,11 +1,12 @@
-
-import React, {Component} from 'react';
+import { BrowserRouter as Router, Switch, Route, Routes } from 'react-router-dom';
+import React, {Component, Fragment} from 'react';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import { Spinner } from './components/layout/Spinner';
 import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
+import { About } from './components/pages/About';
 
 import './App.css';
 
@@ -42,14 +43,27 @@ setAlert=(msg,type)=>{
 
   render(){
     return (
+      <Router>
       <div className="App">
         <Navbar/>
         <div className="container">
           <Alert alert={this.state.alert}/>
-        <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length>0?true:false} setAlert={this.setAlert}/>
-        {this.state.loding?<Spinner/>:this.state.users.map((user,i)=><Users loading={this.state.loading} key={i} users={this.state.users}/>)}
+          <Switch>
+            <Route exact path="/" render={props=> (
+              <Fragment>
+                <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length>0?true:false} setAlert={this.setAlert}/>
+                {this.state.loding?<Spinner/>:this.state.users.map((user,i)=><Users loading={this.state.loading} key={i} users={this.state.users}/>)}
+              
+              </Fragment>
+            )}>
+            </Route>
+            <Route exact path="/about" component={About}>
+              
+            </Route>
+          </Switch>
         </div>
       </div>
+      </Router>
     );
   }
   
