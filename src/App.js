@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Routes } from 'react-router-dom
 import React, {Component, Fragment} from 'react';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
+import User from './components/users/User';
 import { Spinner } from './components/layout/Spinner';
 import axios from 'axios';
 import Search from './components/users/Search';
@@ -14,6 +15,7 @@ class App extends Component {
 
   state = {
     users:[],
+    user:{},
     loding:false,
     alert:null
 }
@@ -27,6 +29,11 @@ componentDidMount(){
 searchUsers=(text)=>{
 console.log(text)
 axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`).then(res => this.setState({users:res.data.items})).then(()=>this.setState({loading:false}))
+}
+
+getUser=(userName)=>{
+  this.setState({loading:true})
+  axios.get(`https://api.github.com/users/${userName}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`).then(res=>this.setState({user:res.data})).then(()=>this.setState({loading:false}))  
 }
 
 clearUsers=()=>{
@@ -57,9 +64,12 @@ setAlert=(msg,type)=>{
               </Fragment>
             )}>
             </Route>
-            <Route exact path="/about" component={About}>
+            <Route exact path="/about" component={About}/>
+            <Route exact path="/user/:login" render={props=>(
+              <User {...props} getUsers={this.getUser} user={this.state.user} loading={this.state.loading}/>
+            )}/>
               
-            </Route>
+           
           </Switch>
         </div>
       </div>
