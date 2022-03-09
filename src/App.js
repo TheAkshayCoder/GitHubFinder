@@ -8,6 +8,7 @@ import axios from 'axios';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import { About } from './components/pages/About';
+import GithubState from './context/github/GithubState';
 
 import './App.css';
 
@@ -20,10 +21,12 @@ const App = ()=> {
   const [alert,setAlert] = useState(null)
 
 
-// useEffect(()=>{
-//   setLoading(true)
-//    axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`).then(res => setUsers(res.data).then(()=>setLoading(false)))
-// },[])
+useEffect(async ()=>{
+  setLoading(true)
+   const response = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+   setUsers(response.data)
+   setLoading(false)
+},[])
 
 
 const searchUsers=(text)=>{
@@ -55,6 +58,7 @@ const setAlertFun=(msg,type)=>{
 
   
     return (
+      <GithubState>
       <Router>
       <div className="App">
         <Navbar/>
@@ -79,6 +83,7 @@ const setAlertFun=(msg,type)=>{
         </div>
       </div>
       </Router>
+      </GithubState>
     );
   }
   
