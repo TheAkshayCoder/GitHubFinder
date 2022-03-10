@@ -29,10 +29,7 @@ useEffect(async ()=>{
 },[])
 
 
-const searchUsers=(text)=>{
-console.log(text)
-axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`).then(res => setUsers(res.data.items)).then(()=>setLoading(false))
-}
+
 
 const getUser=(userName)=>{
   setLoading(true)
@@ -67,8 +64,8 @@ const setAlertFun=(msg,type)=>{
           <Switch>
             <Route exact path="/" render={props=> (
               <Fragment>
-                <Search searchUsers={searchUsers} clearUsers={clearUsers} showClear={users.length>0?true:false} setAlert={setAlertFun}/>
-                {loading?<Spinner/>:users.map((user,i)=><Users loading={loading} key={i} users={users}/>)}
+                <Search clearUsers={clearUsers} showClear={users.length>0?true:false} setAlert={setAlertFun}/>
+                {loading?<Spinner/>:users.map((user,i)=><Users/>)}
               
               </Fragment>
             )}>
