@@ -65,7 +65,7 @@ const setAlertFun=(msg,type)=>{
             <Route exact path="/" render={props=> (
               <Fragment>
                 <Search clearUsers={clearUsers} showClear={users.length>0?true:false} setAlert={setAlertFun}/>
-                {loading?<Spinner/>:users.map((user,i)=><Users/>)}
+                <Users/>
               
               </Fragment>
             )}>
