@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Peralta
+- Font Author: Copyright (c) 2012 by Brian J. Bonislawsky DBA Astigmatic (AOETI) (astigma@astigmatic.com), with Reserved Font Name "Peralta"
+- Font Source: http://fonts.gstatic.com/s/peralta/v15/hYkJPu0-RP_9d3kRGxAhrv956B8.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
