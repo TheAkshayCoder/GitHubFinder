@@ -2,7 +2,6 @@ import React, {useContext} from 'react'
 import UserItems from './UserItems'
 // import axios from 'axios'
 import { Spinner } from '../layout/Spinner.js'
-import PropTypes from 'prop-types' 
 import GithubContext from '../../context/github/githubContext'
 
 

@@ -1,22 +1,19 @@
-import React, { useEffect,Fragment,Component } from 'react'
+import React, { useEffect,Fragment,useContext } from 'react'
 import { Spinner } from '../layout/Spinner';
-import PropTypes from 'prop-types';
 import { Repos } from '../repos/Repos';
 import Link from 'react-router-dom/Link';
+import GithubContext from '../../context/github/githubContext';
 
-const User =({getUserRepos,getUsers,match,user,repos,loading})=> {
-
+const User =({match,repos})=> {
+const githubContext = useContext(GithubContext)
     useEffect(()=>{
-        getUsers(match.params.login);
-        getUserRepos(match.params.login);
-        //eslint-disable-next-line
+        githubContext.getUser(match.params.login);
+        githubContext.getUserRepos(match.params.login);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    
-
-    
-        const {name,company,avatar_url,location,bio,blog,login,html_url,followers,following,public_repos,public_gists,hireable}=user
-        if (loading) return <Spinner/>
+        const {name,company,avatar_url,location,bio,blog,login,html_url,followers,following,public_repos,public_gists,hireable}=githubContext.user
+        if (githubContext.loading) return <Spinner/>
         return (
             <Fragment>
                 <Link to='/' className='btn btn-light'>
@@ -25,7 +22,7 @@ const User =({getUserRepos,getUsers,match,user,repos,loading})=> {
                 {hireable?<span style={{color:"green",fontWeight:700}}>Yes</span>:<span style={{color:"red",fontWeight:700}}>No</span>}
                 <div className='card grid-2'>
                     <div className='all-center'>
-                        <img src={avatar_url} className='round-img' style={{width:'150px'}} />
+                        <img src={avatar_url} alt="img" className='round-img' style={{width:'150px'}} />
                         <h1>{name}</h1>
                         <p>Location : {location}</p>
                     </div>
@@ -72,12 +69,6 @@ const User =({getUserRepos,getUsers,match,user,repos,loading})=> {
             </Fragment>
         )
     }
-User.propTypes={
-    loading:PropTypes.bool,
-    user:PropTypes.object.isRequired,
-    getUsers:PropTypes.func.isRequired,
-    repos:PropTypes.array.isRequired,
-    getUserRepos:PropTypes.func.isRequired,
-}
+
 
 export default User

@@ -1,19 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React,{useContext} from 'react'
+import GithubContext from '../../context/github/githubContext'
 
-const Alert=(props)=> {
+const Alert=()=> {
+    const githubContext = useContext(GithubContext)
     return (
-    props.alert!==null&&(
-        <div className={`alert alert-${props.alert.type}`}>
-            {props.alert.msg}
+    githubContext.alert!==null&&(
+        <div className={`alert alert-${githubContext.alert.type}`}>
+            {githubContext.alert.msg}
         </div>
     )
     )
 }
 
-Alert.propTypes = {
-    alert:PropTypes.object
-}
 
 export default Alert
 
