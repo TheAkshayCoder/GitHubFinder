@@ -8,7 +8,7 @@ import {
     REMOVE_ALERT
  } from '../types'
 
- export default (state,action)=>{
+ const reducer = (state,action)=>{
      switch (action.type) {
          case SET_LOADING:
              return {
@@ -54,3 +54,5 @@ import {
              return state;
      }
  }
+
+ export default reducer
